@@ -11,6 +11,15 @@ const RESUME_FILE = "resume.yaml";
 // replacements are off because they'd turn "Statistics (R)" into "Statistics ®".
 const markdown = markdownIt({ typographer: true }).disable("replacements");
 
+// Links to other sites get rel="nofollow", here and in the contact line.
+// Delete the rel lines if you want search engines to follow them.
+const isWebLink = (url) => /^\s*(https?:)?\/\//i.test(url);
+const renderLinkOpen = markdown.renderer.rules.link_open ?? ((tokens, index, options, env, self) => self.renderToken(tokens, index, options));
+markdown.renderer.rules.link_open = (tokens, index, options, env, self) => {
+	if (isWebLink(tokens[index].attrGet("href") ?? "")) tokens[index].attrSet("rel", "nofollow");
+	return renderLinkOpen(tokens, index, options, env, self);
+};
+
 // Same page setup as the Google Docs original: 0.6 in margins on US Letter,
 // 15 mm on A4. Width and height draw the sheet on screen.
 const PAPERS = {
@@ -90,20 +99,31 @@ function list(value, where) {
 }
 
 const EMAIL = /^[^\s@/]+@[^\s@/]+\.[^\s@/]+$/;
+const SAFE_SCHEMES = ["http", "https", "mailto", "tel"];
+
+// Browsers ignore spaces and control characters when they read a URL's scheme,
+// so " java\tscript:" is still JavaScript. Check it with those removed.
+function checkUrl(url) {
+	let scheme = url.replace(/[\u0000-\u0020\u007f]/g, "").match(/^([a-z][a-z0-9+.-]*):/i)?.[1].toLowerCase();
+	if (scheme && !SAFE_SCHEMES.includes(scheme)) {
+		throw new Error(`${RESUME_FILE}: links in the contact line can start with ${SAFE_SCHEMES.join(":, ")}:, not "${scheme}:".`);
+	}
+	return url;
+}
 
 // Emails and full web addresses become links; anything else is plain text.
 function contactItem(item) {
 	if (isMapping(item)) {
 		checkKeys(item, ["text", "url"], "a contact item");
-		let url = filled(item.url) ? checkText(item.url, "a contact url") : undefined;
-		return { html: inline(item.text ?? url, "a contact item"), url };
+		let url = filled(item.url) ? checkUrl(checkText(item.url, "a contact url")) : undefined;
+		return { html: inline(item.text ?? url, "a contact item"), url, rel: url && isWebLink(url) ? "nofollow" : "" };
 	}
 	let text = checkText(item, "the contact line");
 	let url;
 	if (/^https?:\/\//.test(text)) url = text;
 	else if (text.startsWith("mailto:")) [url, text] = [text, text.slice(7)];
 	else if (EMAIL.test(text)) url = `mailto:${text}`;
-	return { html: url ? markdown.utils.escapeHtml(text) : inline(text), url };
+	return { html: url ? markdown.utils.escapeHtml(text) : inline(text), url, rel: url && isWebLink(url) ? "nofollow" : "" };
 }
 
 function entry(item, section) {

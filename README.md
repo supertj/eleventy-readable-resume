@@ -99,6 +99,10 @@ contact:
     url: https://github.com/oliviabennett
 ```
 
+Links to other sites, here and in Markdown, get `rel="nofollow"`. Take the
+`rel` lines out of [`src/_data/resume.js`](src/_data/resume.js) if you want
+search engines to follow them.
+
 ### Two YAML things to watch
 
 - A line with a colon followed by a space, like `GPA: 3.8/4.0`, needs quotes.

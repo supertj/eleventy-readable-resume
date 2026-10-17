@@ -30,7 +30,7 @@
     {%- if resume.contact.length %}
     <p class="contact">
       {%- for item in resume.contact -%}
-      {%- if item.url %}<a href="{{ item.url }}">{{ item.html | safe }}</a>{% else %}{{ item.html | safe }}{% endif %}
+      {%- if item.url %}<a href="{{ item.url }}"{% if item.rel %} rel="{{ item.rel }}"{% endif %}>{{ item.html | safe }}</a>{% else %}{{ item.html | safe }}{% endif %}
       {%- if not loop.last %} | {% endif -%}
       {%- endfor -%}
     </p>
