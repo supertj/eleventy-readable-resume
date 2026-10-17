@@ -10,6 +10,9 @@ const RESUME_FILE = "resume.yaml";
 // Curly quotes and apostrophes, like the original. The other typographer
 // replacements are off because they'd turn "Statistics (R)" into "Statistics ®".
 const markdown = markdownIt({ typographer: true }).disable("replacements");
+// For the text of a contact link: bold and italic still work, but links and
+// images don't, because the whole label already sits inside one link.
+const labelMarkdown = markdownIt({ typographer: true }).disable(["replacements", "link", "autolink", "image"]);
 
 // Browsers ignore spaces and control characters when they read a URL's scheme,
 // so " java\tscript:" is still JavaScript. Read it with those removed.
@@ -122,8 +125,7 @@ function contactItem(item) {
 		checkKeys(item, ["text", "url"], "a contact item");
 		let url = filled(item.url) ? checkUrl(checkText(item.url, "a contact url")) : undefined;
 		if (!url) return { html: inline(item.text, "a contact item") };
-		// Plain text inside the link: a Markdown link here would nest one link in another
-		return { html: markdown.utils.escapeHtml(checkText(item.text ?? url, "a contact item")), url, rel: relFor(url) };
+		return { html: labelMarkdown.renderInline(checkText(item.text ?? url, "a contact item")), url, rel: relFor(url) };
 	}
 	let text = checkText(item, "the contact line");
 	let url;
