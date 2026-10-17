@@ -105,9 +105,9 @@ if you want search engines to follow them.
 
 ### Two YAML things to watch
 
-- A line with a colon followed by a space, like `GPA: 3.8/4.0`, needs quotes.
-  Without them YAML reads it as a field, and the build stops and tells you
-  which line it was.
+- A bullet with a colon followed by a space, like `GPA: 3.8/4.0`, needs
+  quotes. Without them YAML reads it as a field, and the build stops and tells
+  you which section it's in.
 - So does a line that starts with `*`, `#`, `&`, `!` or a quote mark.
 
 A misspelled field name also stops the build with a message, rather than
