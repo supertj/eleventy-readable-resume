@@ -1,0 +1,32 @@
+{
+  "name": "eleventy-readable-resume",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A one-page resume starter for Eleventy, with the Classic layout from ReadableResume.",
+  "type": "module",
+  "scripts": {
+    "start": "eleventy --serve",
+    "build": "eleventy"
+  },
+  "keywords": [
+    "eleventy",
+    "11ty",
+    "resume",
+    "cv",
+    "starter"
+  ],
+  "author": "Super Lede (https://readableresume.com)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/supertj/eleventy-readable-resume.git"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.7",
+    "js-yaml": "^4.3.2",
+    "markdown-it": "^14.3.3"
+  }
+}

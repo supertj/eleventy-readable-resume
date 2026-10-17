@@ -1,0 +1,82 @@
+# Everything on your resume lives in this file. Save it and the page rebuilds.
+#
+# Put a line in quotes if it has a colon followed by a space (GPA: 3.8) or
+# starts with a character YAML treats specially, like * or #.
+# Inline Markdown works in every text field: **bold**, *italic*, [links](https://...).
+
+name: Olivia Bennett
+
+# Strings, joined with vertical bars. Email addresses and full https:// links
+# become clickable. To show shorter text for a link, give it a url:
+#   - text: github.com/oliviabennett
+#     url: https://github.com/oliviabennett
+contact:
+  - Providence, RI
+  - (401) 555-0132
+  - olivia.bennett@example.com
+  - linkedin.com/in/oliviabennett
+
+# letter or a4. Sets the page size and margins when you print to PDF.
+paper: letter
+
+# Shown in search results if you put the page online.
+description: Resume of Olivia Bennett, an economics student at Halden College.
+
+sections:
+  - title: Education
+    entries:
+      - school: Halden College
+        location: Providence, RI
+        degree: Bachelor of Arts in Economics, Minor in Statistics
+        date: Sep 2022 – May 2026
+        bullets:
+          - "GPA: 3.8/4.0, Economics Department Honors Program"
+          - "Relevant Coursework: Econometrics, Corporate Finance, Game Theory, Financial Accounting, Data Analysis in Python"
+
+  - title: Experience
+    entries:
+      - company: Harlan Quay Capital Partners
+        location: New York, NY
+        title: Investment Banking Analyst Intern
+        date: Jun 2025 – Aug 2025
+        bullets:
+          - Built three-statement models for two consumer retail clients and updated comparable company sets each week
+          - Drafted 20 pages of a sell-side pitch book, including the industry overview and buyer list
+          - Checked a 40-tab merger model line by line before it went to the client and found a circular reference in debt schedules
+
+      - company: Halden College Department of Economics
+        location: Providence, RI
+        title: Research Assistant
+        date: Jan 2024 – May 2025
+        bullets:
+          - Cleaned and merged 15 years of county wage data in Stata for a professor's study on minimum wage spillovers
+          - Wrote summary tables and charts that appeared in a working paper presented at two conferences
+
+      - company: Halden College Writing Center
+        location: Providence, RI
+        title: Peer Tutor
+        date: Sep 2023 – Dec 2024
+        bullets:
+          - Met with about eight students a week to work on essays, lab reports and cover letters
+          - Led two workshops on writing clear policy memos for first-year economics students
+
+  - title: Projects & Activities
+    entries:
+      - name: Halden Investment Club
+        role: Vice President
+        date: Sep 2023 – Present
+        bullets:
+          - Run weekly stock pitch meetings for 45 members and manage a $25,000 student portfolio with four sector heads
+          - Started a mentoring program that paired 18 first-year members with alumni working in finance
+
+      - name: Halden Habitat Builders
+        role: Volunteer Coordinator
+        date: Sep 2022 – May 2024
+        bullets:
+          - Organized monthly build days for about 30 volunteers and kept the sign-up and safety records
+
+  - title: Skills
+    lines:
+      - Technical: Excel, PowerPoint, Python (pandas), Stata, Capital IQ
+      - Certifications: Bloomberg Market Concepts, Wall Street Prep Financial Modeling
+      - Languages: French (fluent), Spanish (basic)

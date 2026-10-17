@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ resume.name or "Resume" }}{% if resume.name %} – Resume{% endif %}</title>
+{%- if resume.description %}
+<meta name="description" content="{{ resume.description }}">
+{%- endif %}
+{%- if demo %}
+<link rel="canonical" href="{{ demo }}">
+{%- endif %}
+<style>
+@page { size: {{ resume.paper.size }}; margin: {{ resume.paper.margin }}; }
+:root { --sheet-width: {{ resume.paper.width }}; --sheet-height: {{ resume.paper.height }}; --sheet-margin: {{ resume.paper.margin }}; }
+{% include "resume.css" %}
+</style>
+</head>
+<body>
+{%- if demo %}
+<aside class="demo-note">
+  <p>This is the demo of <a href="https://github.com/supertj/eleventy-readable-resume" rel="nofollow">eleventy-readable-resume</a>, a one-page resume starter for Eleventy. The layout is the <a href="https://readableresume.com/templates/classic">Classic template from ReadableResume</a>, which is also free for Google Docs and Word. Print the page to see the PDF.</p>
+</aside>
+{%- endif %}
+<main class="sheet">
+  <header>
+    {%- if resume.name %}
+    <h1>{{ resume.name }}</h1>
+    {%- endif %}
+    {%- if resume.contact.length %}
+    <p class="contact">
+      {%- for item in resume.contact -%}
+      {%- if item.url %}<a href="{{ item.url }}">{{ item.html | safe }}</a>{% else %}{{ item.html | safe }}{% endif %}
+      {%- if not loop.last %} | {% endif -%}
+      {%- endfor -%}
+    </p>
+    {%- endif %}
+  </header>
+  {%- for section in resume.sections %}
+  <section>
+    <h2>{{ section.title | safe }}</h2>
+    {{- section.text | safe }}
+    {%- for entry in section.entries %}
+    <div class="entry">
+      {%- if entry.rows.length %}
+      <div class="entry-head">
+        {%- for row in entry.rows %}
+        <p class="row"><span>{{ row[0] | safe }}</span>{% if row[1] %} <span class="right">{{ row[1] | safe }}</span>{% endif %}</p>
+        {%- endfor %}
+      </div>
+      {%- endif %}
+      {%- if entry.bullets.length %}
+      <ul role="list">
+        {%- for bullet in entry.bullets %}
+        <li>{{ bullet | safe }}</li>
+        {%- endfor %}
+      </ul>
+      {%- endif %}
+    </div>
+    {%- endfor %}
+    {%- if section.lines.length %}
+    <p class="lines">
+      {%- for line in section.lines %}{{ line | safe }}{% if not loop.last %}<br>{% endif %}{% endfor -%}
+    </p>
+    {%- endif %}
+  </section>
+  {%- endfor %}
+</main>
+</body>
+</html>

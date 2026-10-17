@@ -1,0 +1,195 @@
+/*
+ * Classic, from ReadableResume (https://readableresume.com/templates/classic).
+ * The sizes come from the Google Docs original: Georgia at 10.5 pt with 1.1
+ * line spacing, a 20 pt name, and 11 pt centered headings over a 0.75 pt rule.
+ * They're in points so the printed page matches the original.
+ */
+
+:root {
+	--ink: #000;
+	--paper: #fff;
+	--desk: #e4e5e7;
+	--note: #3d4147;
+	--font: Georgia, Gelasio, "Times New Roman", serif;
+	--font-ui: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+	color-scheme: light;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	background: var(--desk);
+	-webkit-text-size-adjust: 100%;
+	text-size-adjust: 100%;
+}
+
+body {
+	margin: 0;
+	padding: 32px 16px 64px;
+	color: var(--ink);
+	font: 10.5pt/1.25 var(--font);
+}
+
+/* On screen the resume is drawn as a sheet of the paper it prints on */
+.sheet {
+	max-width: var(--sheet-width);
+	min-height: var(--sheet-height);
+	margin: 0 auto;
+	padding: var(--sheet-margin);
+	background: var(--paper);
+	box-shadow: 0 1px 3px rgb(0 0 0 / 0.12), 0 12px 32px -16px rgb(0 0 0 / 0.3);
+}
+
+h1,
+h2,
+p,
+ul {
+	margin: 0;
+}
+
+h1 {
+	font-size: 20pt;
+	line-height: 1.2;
+	text-align: center;
+}
+
+.contact {
+	margin-top: 2pt;
+	text-align: center;
+}
+
+h2 {
+	margin-top: 6pt;
+	margin-bottom: 2pt;
+	padding-bottom: 1.5pt;
+	border-bottom: 0.75pt solid var(--ink);
+	font-size: 11pt;
+	text-align: center;
+	text-transform: uppercase;
+	break-after: avoid;
+}
+
+header + section h2 {
+	margin-top: 9pt;
+}
+
+/* Collapses with the next heading's margin, so the larger gap wins */
+.entry {
+	margin-bottom: 8.5pt;
+}
+
+/* Keep an entry's header lines together and on the same page as its bullets */
+.entry-head {
+	break-inside: avoid;
+	break-after: avoid;
+}
+
+/* Left part, then the right part pushed to the margin. The text stays in
+   reading order, so a parser reads "Company Location"; when the left part
+   is too long the right part drops to the next line, still right-aligned. */
+.row {
+	display: flex;
+	flex-wrap: wrap;
+	column-gap: 1em;
+}
+
+.right {
+	margin-left: auto;
+	white-space: nowrap;
+}
+
+/* Same hang as the Docs file: dot at 0.1 in, text at 0.25 in. It's a hanging
+   indent rather than a positioned dot on purpose: Chrome paints positioned
+   elements last, which would move every bullet to the end of the PDF's text. */
+ul {
+	padding-left: 0.1in;
+	list-style: none;
+}
+
+li {
+	padding-left: 0.15in;
+	text-indent: -0.15in;
+	break-inside: avoid;
+}
+
+li::before {
+	content: "•";
+	display: inline-block;
+	width: 0.15in;
+	text-indent: 0;
+}
+
+a {
+	color: inherit;
+	text-underline-offset: 0.15em;
+	text-decoration-thickness: 0.5pt;
+}
+
+a:focus-visible {
+	outline: 2px solid currentColor;
+	outline-offset: 2px;
+}
+
+.demo-note {
+	max-width: var(--sheet-width);
+	margin: 0 auto 24px;
+	color: var(--note);
+	font: 15px/1.6 var(--font-ui);
+}
+
+.demo-note a {
+	color: var(--ink);
+	font-weight: 500;
+}
+
+/* Phones: no desk, the sheet fills the screen */
+@media screen and (max-width: 8.75in) {
+	html {
+		background: var(--paper);
+	}
+
+	body {
+		padding: 0;
+	}
+
+	.sheet {
+		min-height: 0;
+		padding: 24px 16px 40px;
+		box-shadow: none;
+	}
+
+	.demo-note {
+		margin: 0;
+		padding: 16px;
+		border-bottom: 1px solid var(--desk);
+	}
+}
+
+@media print {
+	html,
+	body {
+		background: none;
+	}
+
+	body {
+		padding: 0;
+	}
+
+	.sheet {
+		max-width: none;
+		min-height: 0;
+		padding: 0;
+		box-shadow: none;
+	}
+
+	.demo-note {
+		display: none;
+	}
+
+	/* Links work in the PDF but look like the rest of the text */
+	a {
+		text-decoration: none;
+	}
+}
